@@ -3,7 +3,7 @@ warnings.filterwarnings("ignore")
 import os
 print(os.listdir("./input"))
 import pandas as pd 
-#载入数据
+#读入数据
 train = pd.read_csv('./input/labeledTrainData.csv',delimiter = '\t')
 test = pd.read_csv('./input/testData.csv',delimiter = '\t')
 train.shape, test.shape
