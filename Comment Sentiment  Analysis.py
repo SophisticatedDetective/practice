@@ -52,3 +52,25 @@ for classifier_type in classifier_list:
                 predicted_probability=comment.predict_proba(test_x)
                 print(metrics.classification_report(test_y,predicted))
                 print(metrics.confusion_matrix(test_y,predicted))
+train_x = data_bi['Comment']
+train_y = data_bi['Class']
+def labelizeReviews(reviews, label_type):
+    labelized = []
+    for i, v in enumerate(reviews):
+        label = '{0:s}_{1:f}'.foramt(label_type, i)
+        labelized.append(TaggedDocument(v.split(" "), [label]))
+    return labelized
+train_x = labelizeReviews(train_x, "TRAIN")
+size = 300
+all_data = []
+all_data.extend(train_x)
+model = Doc2Vec(min_count=1, window=8, size=size, sample=1e-4, negative=5, hs=0, iter=5, workers=8)
+model.build_vocab(all_data)
+for epoch in range(10):
+    model.train(train_x)
+pos,neg = [],[]
+for i in range(0,len(train_x)):
+    pos.append(model.docvecs.similarity("TRAIN_0","TRAIN_{}".format(i)))
+    neg.append(model.docvecs.similarity("TRAIN_1","TRAIN_{}".format(i)))
+data_bi['PosSim'] = pos
+data_bi['NegSim'] = neg
