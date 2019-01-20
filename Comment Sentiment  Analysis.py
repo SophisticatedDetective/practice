@@ -40,3 +40,15 @@ class CommentClassifier:
         array_score = self.model.predict_proba(self.array_testx)
         return array_score 
         
+train_x, test_x, train_y, test_y = train_test_split(data_cutted['Comment'], data_cutted['Class'],test_size=0.3,random_state=0)                                                        test_size=0.2, random_state=4)
+classifier_list = [1,2,3]
+vector_list = [0,1,2]
+for classifier_type in classifier_list:
+    for vector_type in vector_list: 
+           comment=CommentClassifier(classifier_type,vector_type)
+            comment.fit(train_x,train_y,0.8)
+            if classifier_type==0:
+                predicted=comment.predict(text_x)
+                predicted_probability=comment.predict_proba(test_x)
+                print(metrics.classification_report(test_y,predicted))
+                print(metrics.confusion_matrix(test_y,predicted))
