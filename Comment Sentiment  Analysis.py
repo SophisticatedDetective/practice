@@ -39,7 +39,7 @@ class CommentClassifier:
         self.array_testx = self.vectorizer.transform(list_text)
         array_score = self.model.predict_proba(self.array_testx)
         return array_score 
-        
+ #you can try to modify the raw data and then put the data into the following process part from line 43 to 54       
 train_x, test_x, train_y, test_y = train_test_split(data_cutted['Comment'], data_cutted['Class'],test_size=0.3,random_state=0)                                                        test_size=0.2, random_state=4)
 classifier_list = [1,2,3]
 vector_list = [0,1,2]
